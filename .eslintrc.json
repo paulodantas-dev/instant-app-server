@@ -14,7 +14,7 @@
   ],
   "overrides": [
     {
-      "files": ["**/*.ts?(x)"],
+      "files": ["**/*.ts"],
       "parser": "@typescript-eslint/parser",
       "extends": ["plugin:@typescript-eslint/recommended", "plugin:import/typescript"]
     }
@@ -38,6 +38,7 @@
           "/^express/",
           "module",
           "/^@/",
+          "/^middlewares/",
           "/^models/",
           "/^controller/",
           "/^config/",

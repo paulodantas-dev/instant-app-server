@@ -1,6 +1,25 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema(
+export interface IUser extends mongoose.Document {
+  fullname: string;
+  username: string;
+  email: string;
+  password: string;
+  profilePicture: string;
+  coverPicture: string;
+  about: string;
+  gender: string;
+  root: boolean;
+  role: string;
+  mobile: string;
+  address: string;
+  story: string;
+  relationship: string;
+  followers: [mongoose.Types.ObjectId];
+  following: [mongoose.Types.ObjectId];
+}
+
+const userSchema = new mongoose.Schema<IUser>(
   {
     fullname: {
       type: String,
@@ -26,6 +45,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: 'user',
+    },
+
+    root: {
+      type: Boolean,
+      default: false,
+    },
     profilePicture: {
       type: String,
       default:
@@ -39,14 +67,6 @@ const userSchema = new mongoose.Schema(
     about: {
       type: String,
       default: '',
-    },
-    root: {
-      type: Boolean,
-      default: false,
-    },
-    role: {
-      type: String,
-      default: 'user',
     },
     gender: {
       type: String,
@@ -87,6 +107,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model('users', userSchema);
+const User = mongoose.model<IUser>('users', userSchema);
 
 export default User;
