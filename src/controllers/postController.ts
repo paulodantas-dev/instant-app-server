@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Comment from '../models/Comment';
 
+import Comment from '../models/Comment';
 import Post from '../models/Post';
 
 const postController = {
