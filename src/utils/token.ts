@@ -5,5 +5,5 @@ export const createAccessToken = (payload: string | object | Buffer) => {
 };
 
 export const createRefreshToken = (payload: string | object | Buffer) => {
-  return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
+  return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '20d' });
 };
