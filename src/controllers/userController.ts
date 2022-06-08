@@ -9,18 +9,20 @@ const userController = {
         .limit(10)
         .select('fullname username profilePicture');
 
-      res.json({ users });
+      res.status(200).json({ users });
     } catch (error) {
       return res.status(500).json({ error });
     }
   },
   getUser: async (req: Request, res: Response) => {
     try {
-      const user = await User.findById(req.params.id).select('-password');
+      const user = await User.findById(req.params.id)
+        .select('-password')
+        .populate('followers following', '-password');
 
       if (!user) return res.status(400).json({ error: 'User does not exist.' });
 
-      res.json({ user });
+      res.status(200).json({ user });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -56,7 +58,7 @@ const userController = {
         { new: true }
       );
 
-      res.json({ success: 'Update Success!', updateUser });
+      res.status(200).json({ success: 'Update Success!', updateUser });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -72,7 +74,7 @@ const userController = {
           $push: { followers: req.user._id },
         },
         { new: true }
-      );
+      ).populate('followers following', '-password');
 
       await User.findOneAndUpdate(
         { _id: req.user._id },
@@ -82,7 +84,7 @@ const userController = {
         { new: true }
       );
 
-      res.json({ success: 'Follow Success!', newUser });
+      res.status(200).json({ success: 'Follow Success!', newUser });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -95,7 +97,7 @@ const userController = {
           $pull: { followers: req.user._id },
         },
         { new: true }
-      );
+      ).populate('followers following', '-password');
 
       await User.findOneAndUpdate(
         { _id: req.user._id },
@@ -105,7 +107,7 @@ const userController = {
         { new: true }
       );
 
-      res.json({ success: 'Unfollow Success!', newUser });
+      res.status(200).json({ success: 'Unfollow Success!', newUser });
     } catch (error) {
       return res.status(500).json({ error });
     }

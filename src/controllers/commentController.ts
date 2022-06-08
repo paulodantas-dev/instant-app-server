@@ -28,7 +28,7 @@ const commentController = {
 
       await newComment.save();
 
-      res.json({ success: 'Comment created!', comment: newComment });
+      res.status(200).json({ success: 'Comment created!', comment: newComment });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -46,7 +46,7 @@ const commentController = {
         { new: true }
       );
 
-      res.json({ success: 'Update Success!', comment: comment });
+      res.status(200).json({ success: 'Update Success!', comment: comment });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -64,7 +64,7 @@ const commentController = {
         { new: true }
       );
 
-      res.json({ success: 'Liked Comment!' });
+      res.status(200).json({ success: 'Liked Comment!' });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -79,7 +79,7 @@ const commentController = {
         { new: true }
       );
 
-      res.json({ success: 'UnLiked Comment!' });
+      res.status(200).json({ success: 'UnLiked Comment!' });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -91,8 +91,6 @@ const commentController = {
         $or: [{ user: req.user._id }, { postUserId: req.user._id }],
       });
 
-      console.log(comment);
-
       await Post.findOneAndUpdate(
         { _id: comment?.postId },
         {
@@ -100,7 +98,7 @@ const commentController = {
         }
       );
 
-      res.json({ success: 'Deleted Comment!' });
+      res.status(200).json({ success: 'Deleted Comment!' });
     } catch (error) {
       return res.status(500).json({ error });
     }

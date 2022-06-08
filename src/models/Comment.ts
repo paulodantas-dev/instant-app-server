@@ -14,8 +14,8 @@ const commentSchema = new mongoose.Schema<IComment>(
       type: String,
       required: true,
     },
-    likes: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
-    user: { type: mongoose.Types.ObjectId, ref: 'user' },
+    likes: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+    user: { type: mongoose.Types.ObjectId, ref: 'User' },
     postId: mongoose.Types.ObjectId,
     postUserId: mongoose.Types.ObjectId,
   },
@@ -24,6 +24,6 @@ const commentSchema = new mongoose.Schema<IComment>(
   }
 );
 
-const Comment = mongoose.model<IComment>('comments', commentSchema);
+const Comment = mongoose.model<IComment>('Comment', commentSchema);
 
 export default Comment;

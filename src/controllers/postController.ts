@@ -8,9 +8,18 @@ const postController = {
     try {
       const posts = await Post.find({
         user: [...req.user.following, req.user._id],
-      }).sort('-createdAt');
+      })
+        .sort('-createdAt')
+        .populate('user likes', 'profilePicture username fullname followers')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user likes',
+            select: '-password',
+          },
+        });
 
-      res.json({
+      res.status(200).json({
         success: 'Success!',
         result: posts.length,
         posts,
@@ -23,7 +32,7 @@ const postController = {
     try {
       const posts = await Post.find({ user: req.params.id }).sort('-createdAt');
 
-      res.json({
+      res.status(200).json({
         posts,
         result: posts.length,
       });
@@ -33,10 +42,18 @@ const postController = {
   },
   getPost: async (req: Request, res: Response) => {
     try {
-      const post = await Post.findById(req.params.id);
+      const post = await Post.findById(req.params.id)
+        .populate('user likes', 'profilePicture username fullname followers')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user likes',
+            select: '-password',
+          },
+        });
       if (!post) return res.status(400).json({ error: 'This post does not exist.' });
 
-      res.json({
+      res.status(200).json({
         success: 'Post found!',
         post,
       });
@@ -59,7 +76,7 @@ const postController = {
 
       const newPost = await postDB.save();
 
-      res.json({
+      res.status(200).json({
         success: 'Created Post!',
         post: {
           post: newPost,
@@ -75,7 +92,7 @@ const postController = {
       const post = await Post.findOneAndDelete({ _id: req.params.id, user: req.user._id });
       await Comment.deleteMany({ _id: { $in: post?.comments } });
 
-      res.json({
+      res.status(200).json({
         success: 'Deleted Post!',
       });
     } catch (error) {
@@ -93,9 +110,17 @@ const postController = {
           images,
         },
         { new: true }
-      );
+      )
+        .populate('user likes', 'profilePicture username fullname followers')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user likes',
+            select: '-password',
+          },
+        });
 
-      res.json({
+      res.status(200).json({
         success: 'Updated Post!',
         post,
       });
@@ -118,7 +143,7 @@ const postController = {
 
       if (!like) return res.status(400).json({ error: 'This post does not exist.' });
 
-      res.json({ success: 'Liked Post!' });
+      res.status(200).json({ success: 'Liked Post!' });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -135,7 +160,7 @@ const postController = {
 
       if (!like) return res.status(400).json({ error: 'This post does not exist.' });
 
-      res.json({ successs: 'UnLiked Post!' });
+      res.status(200).json({ successs: 'UnLiked Post!' });
     } catch (error) {
       return res.status(500).json({ error });
     }

@@ -57,7 +57,6 @@ const authController = {
       const { email, password } = req.body;
 
       const user = await User.findOne({ email });
-
       if (!user) return res.status(400).json({ error: 'This email does not exist.' });
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -72,7 +71,7 @@ const authController = {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30days
       });
 
-      res.json({
+      res.status(200).json({
         success: 'Login Success!',
         access_token,
         user,
@@ -86,7 +85,7 @@ const authController = {
       res.clearCookie('refreshtoken', {
         path: '/api/refresh_token',
       });
-      return res.json({ success: 'Logged out!' });
+      return res.status(200).json({ success: 'Logged out!' });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -95,7 +94,7 @@ const authController = {
     try {
       const rf_token = req.headers.cookie?.split('=')[1];
       if (!rf_token) return res.status(400).json({ error: 'Token doenst exist.' });
-      console.log(rf_token);
+
       const resultToken = jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET) as JwtPayload;
       if (!resultToken) return res.status(400).json({ error: 'invalid token.' });
 
@@ -104,7 +103,7 @@ const authController = {
 
       const access_token = createAccessToken({ id: resultToken.id });
 
-      res.json({
+      res.status(200).json({
         access_token,
         user,
       });

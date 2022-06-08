@@ -92,13 +92,13 @@ const userSchema = new mongoose.Schema<IUser>(
     followers: [
       {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
       },
     ],
     following: [
       {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
       },
     ],
   },
@@ -107,6 +107,6 @@ const userSchema = new mongoose.Schema<IUser>(
   }
 );
 
-const User = mongoose.model<IUser>('users', userSchema);
+const User = mongoose.model<IUser>('User', userSchema);
 
 export default User;

@@ -8,13 +8,13 @@ const authentication = async (req: Request, res: Response, next: NextFunction) =
   try {
     const token = req.header('Authorization');
 
-    if (!token) return res.status(400).json({ error: 'Invalid Authentication.' });
+    if (!token) return res.status(400).json({ error: 'Please Log in.' });
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET) as JwtPayload;
     if (!decoded) return res.status(400).json({ error: 'Invalid Authentication.' });
 
     const user = await User.findOne({ _id: decoded.id });
-    if (!user) return res.status(400).json({ error: 'Invalid Authentication.' });
+    if (!user) return res.status(400).json({ error: 'User invalid.' });
 
     req.user = user;
     next();
