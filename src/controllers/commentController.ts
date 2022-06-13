@@ -28,7 +28,7 @@ const commentController = {
 
       await newComment.save();
 
-      res.status(200).json({ success: 'Comment created!', comment: newComment });
+      res.status(200).json({ success: true, comment: newComment });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -46,7 +46,7 @@ const commentController = {
         { new: true }
       );
 
-      res.status(200).json({ success: 'Update Success!', comment: comment });
+      res.status(200).json({ success: true, comment: comment });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -64,7 +64,7 @@ const commentController = {
         { new: true }
       );
 
-      res.status(200).json({ success: 'Liked Comment!' });
+      res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -79,7 +79,7 @@ const commentController = {
         { new: true }
       );
 
-      res.status(200).json({ success: 'UnLiked Comment!' });
+      res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -98,7 +98,7 @@ const commentController = {
         }
       );
 
-      res.status(200).json({ success: 'Deleted Comment!' });
+      res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error });
     }

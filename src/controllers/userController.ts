@@ -9,7 +9,7 @@ const userController = {
         .limit(10)
         .select('fullname username profilePicture');
 
-      res.status(200).json({ users });
+      res.status(200).json({ success: true, users });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -22,7 +22,7 @@ const userController = {
 
       if (!user) return res.status(400).json({ error: 'User does not exist.' });
 
-      res.status(200).json({ user });
+      res.status(200).json({ success: true, user });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -58,7 +58,7 @@ const userController = {
         { new: true }
       );
 
-      res.status(200).json({ success: 'Update Success!', updateUser });
+      res.status(200).json({ success: true, updateUser });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -84,7 +84,7 @@ const userController = {
         { new: true }
       );
 
-      res.status(200).json({ success: 'Follow Success!', newUser });
+      res.status(200).json({ success: true, newUser });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -107,7 +107,7 @@ const userController = {
         { new: true }
       );
 
-      res.status(200).json({ success: 'Unfollow Success!', newUser });
+      res.status(200).json({ success: true, newUser });
     } catch (error) {
       return res.status(500).json({ error });
     }

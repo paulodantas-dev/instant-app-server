@@ -44,7 +44,7 @@ const authController = {
       const newUser = await userDB.save();
 
       res.status(200).json({
-        success: 'Register Success!',
+        success: true,
         access_token,
         user: newUser,
       });
@@ -72,7 +72,7 @@ const authController = {
       });
 
       res.status(200).json({
-        success: 'Login Success!',
+        success: true,
         access_token,
         user,
       });
@@ -85,7 +85,7 @@ const authController = {
       res.clearCookie('refreshtoken', {
         path: '/api/refresh_token',
       });
-      return res.status(200).json({ success: 'Logged out!' });
+      return res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -104,6 +104,7 @@ const authController = {
       const access_token = createAccessToken({ id: resultToken.id });
 
       res.status(200).json({
+        success: true,
         access_token,
         user,
       });

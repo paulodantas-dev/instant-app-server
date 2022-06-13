@@ -20,7 +20,7 @@ const postController = {
         });
 
       res.status(200).json({
-        success: 'Success!',
+        success: true,
         result: posts.length,
         posts,
       });
@@ -33,6 +33,7 @@ const postController = {
       const posts = await Post.find({ user: req.params.id }).sort('-createdAt');
 
       res.status(200).json({
+        success: true,
         posts,
         result: posts.length,
       });
@@ -54,7 +55,7 @@ const postController = {
       if (!post) return res.status(400).json({ error: 'This post does not exist.' });
 
       res.status(200).json({
-        success: 'Post found!',
+        success: true,
         post,
       });
     } catch (error) {
@@ -77,7 +78,7 @@ const postController = {
       const newPost = await postDB.save();
 
       res.status(200).json({
-        success: 'Created Post!',
+        success: true,
         post: {
           post: newPost,
           user: req.user._id,
@@ -93,7 +94,7 @@ const postController = {
       await Comment.deleteMany({ _id: { $in: post?.comments } });
 
       res.status(200).json({
-        success: 'Deleted Post!',
+        success: true,
       });
     } catch (error) {
       return res.status(500).json({ error });
@@ -121,7 +122,7 @@ const postController = {
         });
 
       res.status(200).json({
-        success: 'Updated Post!',
+        success: true,
         post,
       });
     } catch (error) {
@@ -143,7 +144,7 @@ const postController = {
 
       if (!like) return res.status(400).json({ error: 'This post does not exist.' });
 
-      res.status(200).json({ success: 'Liked Post!' });
+      res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -160,7 +161,7 @@ const postController = {
 
       if (!like) return res.status(400).json({ error: 'This post does not exist.' });
 
-      res.status(200).json({ successs: 'UnLiked Post!' });
+      res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error });
     }
