@@ -37,7 +37,7 @@ const authController = {
 
       res.cookie('refreshtoken', refresh_token, {
         httpOnly: true,
-        path: '/api/refresh_token',
+        path: 'api/refresh_token',
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30days
       });
 
@@ -67,7 +67,7 @@ const authController = {
 
       res.cookie('refreshtoken', refresh_token, {
         httpOnly: true,
-        path: '/api/refresh_token',
+        path: 'api/refresh_token',
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30days
       });
 
@@ -83,7 +83,7 @@ const authController = {
   logout: async (_req: Request, res: Response) => {
     try {
       res.clearCookie('refreshtoken', {
-        path: '/api/refresh_token',
+        path: 'api/refresh_token',
       });
       return res.status(200).json({ success: true });
     } catch (error) {
